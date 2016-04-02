@@ -10,6 +10,9 @@ local.properties
 .loadpath
 .recommenders
 
+# Sensitive data
+src/file_sync/Settings.java
+
 # Eclipse Core
 .project
 
