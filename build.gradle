@@ -1,0 +1,45 @@
+apply plugin: 'groovy'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+configurations {
+   compileOnly
+}
+
+sourceCompatibility = 1.8
+version = '1.0'
+jar {
+   manifest {
+      attributes 'Implementation-Title': 'BroSync',
+                 'Implementation-Version': 1.0
+   }
+}
+
+repositories {
+   mavenCentral()
+}
+
+sourceSets {
+   main 
+}
+
+dependencies {
+   testCompile group: 'junit', name: 'junit', version: '4.+'
+
+   compile 'org.codehaus.groovy:groovy-all:2.4.6'
+   compile 'org.postgresql:postgresql:9.4.1208'
+   compile 'org.springframework:spring-core:4.2.5.RELEASE'
+   compile 'org.springframework:spring-beans:4.2.5.RELEASE'
+   compile 'org.springframework:spring-context:4.2.5.RELEASE'
+   compile 'org.springframework:spring-context-support:4.2.5.RELEASE'
+   compile 'org.springframework:spring-jdbc:4.2.5.RELEASE'
+}
+
+mainClassName = "brosync.Main"
+sourceSets.main.compileClasspath += [configurations.compileOnly]
+
+eclipse {
+   classpath {
+      plusConfigurations += [configurations.compileOnly]
+   }
+}
