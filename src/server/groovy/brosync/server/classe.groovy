@@ -1,6 +1,6 @@
-package brosync.app
+package brosync.server
 
-import brosync.app.db.TestDAO
+import brosync.server.db.TestDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

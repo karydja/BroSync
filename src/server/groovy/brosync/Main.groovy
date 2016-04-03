@@ -2,8 +2,8 @@ package brosync
 
 import org.springframework.context.support.GenericGroovyApplicationContext
 
-import brosync.app.Classe
-import brosync.app.db.TestDAO;
+import brosync.server.Classe
+import brosync.server.db.TestDAO;
 
 class Main {
    public static void main(String... args) {

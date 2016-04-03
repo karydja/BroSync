@@ -1,4 +1,4 @@
-package brosync.app.db
+package brosync.server.db
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
@@ -11,8 +11,9 @@ class TestDAO {
    JdbcTemplate jdbcTemplate
 
    def test() {
-      def retorno = jdbcTemplate.queryForObject('SELECT 1', Integer)
-      println retorno == 1
+      jdbcTemplate.update("INSERT INTO users VALUES (DEFAULT, 'karydja5', 'karydja5@teste.com', 'password')")
+      /*def retorno = jdbcTemplate.queryForObject('SELECT 1', Integer)
+      println retorno == 1*/
    }
 
    def test2() {
