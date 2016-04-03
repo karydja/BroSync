@@ -4,13 +4,9 @@ plugins {
    id 'eclipse'
 }
 
-sourceCompatibility = 1.8
+mainClassName = "brosync.Main"
 version = '1.0'
-
-distributions {
-   server {}
-   client {}
-}
+sourceCompatibility = 1.8
 
 jar {
    manifest {
@@ -23,13 +19,8 @@ repositories {
    mavenCentral()
 }
 
-sourceSets {
-   server
-   client
-}
-
 dependencies {
-   testCompile group: 'junit', name: 'junit', version: '4.+'
+   testCompile 'junit:junit:4.+'
 
    compile 'org.codehaus.groovy:groovy-all:2.4.6'
    compile 'org.postgresql:postgresql:9.4.1208'
@@ -40,4 +31,12 @@ dependencies {
    compile 'org.springframework:spring-jdbc:4.2.5.RELEASE'
 }
 
-mainClassName = "brosync.Main"
+distributions {
+   server {}
+   client {}
+}
+
+sourceSets {
+   server
+   client
+}
