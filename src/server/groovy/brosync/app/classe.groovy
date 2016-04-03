@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class Classe {
-  @Autowired
-  TestDAO testDAO
-  
-  def metodo() {
-    println testDAO.test()
-  }
+   @Autowired
+   TestDAO testDAO
+
+   def metodo() {
+      println testDAO.test()
+   }
 }
