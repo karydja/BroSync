@@ -1,13 +1,17 @@
-apply plugin: 'groovy'
-apply plugin: 'application'
-apply plugin: 'eclipse'
-
-configurations {
-   compileOnly
+plugins {
+   id 'groovy'
+   id 'application'
+   id 'eclipse'
 }
 
 sourceCompatibility = 1.8
 version = '1.0'
+
+distributions {
+   server {}
+   client {}
+}
+
 jar {
    manifest {
       attributes 'Implementation-Title': 'BroSync',
@@ -20,7 +24,8 @@ repositories {
 }
 
 sourceSets {
-   main 
+   server
+   client
 }
 
 dependencies {
@@ -36,10 +41,3 @@ dependencies {
 }
 
 mainClassName = "brosync.Main"
-sourceSets.main.compileClasspath += [configurations.compileOnly]
-
-eclipse {
-   classpath {
-      plusConfigurations += [configurations.compileOnly]
-   }
-}
