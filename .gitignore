@@ -10,4 +10,5 @@ local.properties
 database.properties
 .settings/
 .gradle/
+.groovy/
 .loadpath
