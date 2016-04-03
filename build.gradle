@@ -19,24 +19,38 @@ repositories {
    mavenCentral()
 }
 
+distributions {
+   server
+   client
+}
+
+sourceSets {
+   communications
+   server {
+      compileClasspath += communications.output
+      runtimeClasspath += communications.output
+   }
+   client {
+      compileClasspath += communications.output
+      runtimeClasspath += communications.output
+   }
+}
+
 dependencies {
    testCompile 'junit:junit:4.+'
 
    compile 'org.codehaus.groovy:groovy-all:2.4.6'
-   compile 'org.postgresql:postgresql:9.4.1208'
-   compile 'org.springframework:spring-core:4.2.5.RELEASE'
-   compile 'org.springframework:spring-beans:4.2.5.RELEASE'
-   compile 'org.springframework:spring-context:4.2.5.RELEASE'
-   compile 'org.springframework:spring-context-support:4.2.5.RELEASE'
-   compile 'org.springframework:spring-jdbc:4.2.5.RELEASE'
+
+   serverCompile 'org.postgresql:postgresql:9.4.1208'
+   serverCompile 'org.springframework:spring-core:4.2.5.RELEASE'
+   serverCompile 'org.springframework:spring-beans:4.2.5.RELEASE'
+   serverCompile 'org.springframework:spring-context:4.2.5.RELEASE'
+   serverCompile 'org.springframework:spring-context-support:4.2.5.RELEASE'
+   serverCompile 'org.springframework:spring-jdbc:4.2.5.RELEASE'
 }
 
-distributions {
-   server {}
-   client {}
-}
-
-sourceSets {
-   server
-   client
+eclipse {
+   classpath {
+      plusConfigurations += [configurations.serverCompile]
+   }
 }
