@@ -1,6 +1,6 @@
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
-import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.datasource.DriverManagerDataSource
 
 beans {
    xmlns([context: 'http://www.springframework.org/schema/context'])
