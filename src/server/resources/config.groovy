@@ -8,8 +8,6 @@ beans {
    context.'property-placeholder'('location': 'file:database.properties')
 
    // beans
-   propertySourcesPlaceholderConfigurer (PropertySourcesPlaceholderConfigurer)
-
    dataSource (DriverManagerDataSource) {
       url = '${database.url}'
       username = '${database.user}'
