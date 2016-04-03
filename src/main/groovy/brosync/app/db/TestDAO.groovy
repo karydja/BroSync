@@ -2,7 +2,7 @@ package brosync.app.db
 
 import org.springframework.stereotype.Repository
 import org.springframework.beans.factory.annotation.Autowired
-import brosync.app.db.JdbcTemplate
+import org.springframework.jdbc.core.JdbcTemplate
 
 @Repository
 class TestDAO {
