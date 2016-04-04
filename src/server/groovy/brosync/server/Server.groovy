@@ -4,7 +4,7 @@ import brosync.communications.Request
 
 class Server {
    def static start() {
-      def port = Application.context.getBeanFactory().resolveEmbeddedValue('${server.port:4567}')
+      def port = Application['server.port:4567']
       def server = new ServerSocket(port as int)
 
       while(true) {

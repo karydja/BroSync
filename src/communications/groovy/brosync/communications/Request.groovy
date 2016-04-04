@@ -1,6 +1,9 @@
 package brosync.communications
 
+import brosync.communications.params.Params
+
 class Request implements Serializable {
    RequestMethod method
-   Map params
+   Params params
+   Object attachment
 }

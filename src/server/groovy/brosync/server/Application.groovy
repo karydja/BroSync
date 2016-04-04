@@ -13,4 +13,8 @@ class Application {
       this.context = context
       Server.start()
    }
+
+   def static String getAt(String property) {
+      context.getBeanFactory().resolveEmbeddedValue("\${${property}}")
+   }
 }

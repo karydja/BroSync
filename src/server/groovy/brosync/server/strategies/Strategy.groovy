@@ -2,12 +2,13 @@ package brosync.server.strategies
 
 import brosync.communications.Reply
 import brosync.communications.ReplyStatus
+import brosync.communications.params.Params
 
 abstract class Strategy implements Runnable {
-   Map params
+   Params params
    Socket socket
 
-   def abstract Reply executeRequestMethodAction(Map params)
+   def abstract Reply executeRequestMethodAction(Params params)
 
    @Override
    def void run() {
