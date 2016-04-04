@@ -41,6 +41,8 @@ dependencies {
 
    compile 'org.codehaus.groovy:groovy-all:2.4.6'
 
+   communicationsCompile 'org.apache.commons:commons-lang3:3.4'
+
    serverCompile 'org.postgresql:postgresql:9.4.1208'
    serverCompile 'org.springframework:spring-core:4.2.5.RELEASE'
    serverCompile 'org.springframework:spring-beans:4.2.5.RELEASE'
@@ -51,6 +53,7 @@ dependencies {
 
 eclipse {
    classpath {
+      plusConfigurations += [configurations.communicationsCompile]
       plusConfigurations += [configurations.serverCompile]
    }
 }

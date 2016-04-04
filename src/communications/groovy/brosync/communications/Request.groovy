@@ -1,7 +1,6 @@
 package brosync.communications
 
-class Request {
-   def metodo() {
-      return null
-   }
+class Request implements Serializable {
+   RequestMethod method
+   Map params
 }
