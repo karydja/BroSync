@@ -32,14 +32,14 @@ class UserDAO {
    }
 
    def List findUsernamesOfExistingSharingsForFileByPathAndUsername(String username, String filePath) {
-      this.findUsernamesOfExistingSharingsByCondition(username, [path_for_user: filePath])
+      this.findUsernamesOfExistingSharingByCondition(username, [original_path_within_original_dir: filePath])
    }
 
    def List findUsernamesOfExistingSharingsForDirectoryByPathAndUsername(String username, String filePath) {
-      this.findUsernamesOfExistingSharingsByCondition(username, [dir_path_for_user: filePath])
+      this.findUsernamesOfExistingSharingByCondition(username, [original_dir: filePath])
    }
 
-   def private List findUsernamesOfExistingSharingsByCondition(String username, Map condition) {
+   def private List findUsernamesOfExistingSharingByCondition(String username, Map condition) {
       def column = condition.keySet().iterator().next()
       def value = condition.entrySet().iterator().next().value
 
@@ -58,7 +58,7 @@ class UserDAO {
          INNER JOIN users requestuser
          ON requestuser.id = existingsharing.user_id
 
-         WHERE existingsharing.${column} = ?
+         WHERE files.${column} = ?
          AND requestuser.username = ?
       """
 

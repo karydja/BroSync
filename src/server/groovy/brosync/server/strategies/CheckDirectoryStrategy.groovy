@@ -38,7 +38,7 @@ class CheckDirectoryStrategy extends Strategy {
             status: ReplyStatus.OK,
             message: """
                Essa pasta foi compartilhada com os seguintes usuários:
-               ${usernamesValues.join(', ')}
+               ${usernames.join(', ')}
             """
          )
       }

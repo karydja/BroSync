@@ -15,7 +15,7 @@ class Main {
       // REQUEST #1 PARA ARQUIVOS SOLTOS
       /*def params = new CheckSingleFileParams([
          username: 'karydja',
-         path: '/home/karydja/TesteBroSync/teste.txt',
+         path: 'a.txt',
          isDirectory: false
       ])
       def request = new Request(
@@ -25,19 +25,19 @@ class Main {
 
 
       // REQUEST #1 PARA DIRETÓRIOS
-      /*def params = new CheckDirectoryParams([
+      def params = new CheckDirectoryParams([
          username: 'karydja',
-         path: '/home/karydja/TesteBroSync/Broderagens/',
+         path: 'Fotos',
          isDirectory: true
       ])
       def request = new Request(
          method: RequestMethod.CHECK_DIRECTORY,
          params: params
-      )*/
+      )
 
 
       // REQUEST PARA SIGN UP
-      def params = new SignUpParams([
+      /*def params = new SignUpParams([
          username: 'karydja6',
          email: 'karydja6@teste.com',
          password: 'password'
@@ -45,7 +45,7 @@ class Main {
       def request = new Request(
          method: RequestMethod.SIGN_UP,
          params: params
-      )
+      )*/
 
       output.writeObject(request)
 

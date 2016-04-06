@@ -42,7 +42,7 @@ class CheckSingleFileStrategy extends Strategy {
             status: ReplyStatus.OK,
             message: """
                Esse arquivo foi compartilhado com os seguintes usuários:
-               ${usernamesValues.join(', ')}
+               ${usernames.join(', ')}
             """
          )
       }
