@@ -17,6 +17,6 @@ CREATE TABLE sharings (
    id                SERIAL PRIMARY KEY,
    user_id           INTEGER NOT NULL REFERENCES users(id),
    file_id           INTEGER NOT NULL REFERENCES files(id),
-   dir_path_for_user VARCHAR UNIQUE,
+   dir_path_for_user VARCHAR,
    path_for_user     VARCHAR
 );

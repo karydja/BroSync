@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.util.DigestUtils
 
-import brosync.communications.Reply
 import brosync.communications.dto.File as FileDTO
 import brosync.server.Application
 import brosync.server.db.FileDAO
@@ -58,16 +57,12 @@ class FileOperationsService {
       }
    }
 
-   def public boolean checkPathExistence(String username, String path, boolean isDirectory = false) {
-      def sharings
-
+   def public List getUsersWithFileAlreadyShared(String username, String path, boolean isDirectory = false) {
       if(isDirectory) {
-         sharings = sharingDAO.findSharingsForDirectoryByPathAndUsername(username, path)
+         userDAO.findUsernamesOfExistingSharingsForDirectoryByPathAndUsername(username, path)
       } else {
-         sharings = sharingDAO.findSharingsForFileByPathAndUsername(username, path)
+         userDAO.findUsernamesOfExistingSharingsForFileByPathAndUsername(username, path)
       }
-
-      return !sharings.empty
    }
 
    def private FileModel fileDTOToFileModel(FileDTO fileDTO, String chosenPath) {

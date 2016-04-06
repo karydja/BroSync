@@ -30,4 +30,38 @@ class UserDAO {
       """
       jdbcTemplate.query(sql, new BeanPropertyRowMapper(User), usernames)
    }
+
+   def List findUsernamesOfExistingSharingsForFileByPathAndUsername(String username, String filePath) {
+      this.findUsernamesOfExistingSharingsByCondition(username, [path_for_user: filePath])
+   }
+
+   def List findUsernamesOfExistingSharingsForDirectoryByPathAndUsername(String username, String filePath) {
+      this.findUsernamesOfExistingSharingsByCondition(username, [dir_path_for_user: filePath])
+   }
+
+   def private List findUsernamesOfExistingSharingsByCondition(String username, Map condition) {
+      def column = condition.keySet().iterator().next()
+      def value = condition.entrySet().iterator().next().value
+
+      def sql = """
+         SELECT allusers.username FROM users allusers
+
+         INNER JOIN sharings allsharings
+         ON allusers.id = allsharings.user_id
+
+         INNER JOIN files
+         ON files.id = allsharings.file_id
+
+         INNER JOIN sharings existingsharing
+         ON existingsharing.file_id = files.id
+
+         INNER JOIN users requestuser
+         ON requestuser.id = existingsharing.user_id
+
+         WHERE existingsharing.${column} = ?
+         AND requestuser.username = ?
+      """
+
+      jdbcTemplate.queryForList(sql, String, value, username)
+   }
 }
