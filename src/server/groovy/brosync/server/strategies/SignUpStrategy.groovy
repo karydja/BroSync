@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 
 import brosync.communications.Reply
 import brosync.communications.ReplyStatus
+import brosync.communications.params.Params
 import brosync.server.models.User
 import brosync.server.operations.UserOperationsService
 
@@ -17,7 +18,7 @@ class SignUpStrategy extends Strategy {
    UserOperationsService userOperations
 
    @Override
-   def Reply executeRequestMethodAction(Map params) {
+   def Reply executeRequestMethodAction(Params params) {
       def newUser = new User(params)
 
       try {

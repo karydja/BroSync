@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 import brosync.communications.Reply
+import brosync.communications.params.Params
 import brosync.server.operations.FileOperationsService
 
 @Component
@@ -14,6 +15,6 @@ class UploadSingleFileStrategy extends Strategy {
    FileOperationsService fileOperations
 
    @Override
-   def Reply executeRequestMethodAction(Map params) {
+   def Reply executeRequestMethodAction(Params params) {
    }
 }
