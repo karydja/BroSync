@@ -8,7 +8,8 @@ enum RequestMethod {
    CHECK_SINGLE_FILE,
    UPLOAD_SINGLE_FILE,
    CHECK_DIRECTORY,
-   UPLOAD_DIRECTORY
+   UPLOAD_DIRECTORY,
+   SYNC
 
    def getCamelCaseName() {
       WordUtils.capitalizeFully(this.name(), '_' as char).replaceAll('_', '')

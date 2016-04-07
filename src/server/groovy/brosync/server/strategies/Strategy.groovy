@@ -1,5 +1,8 @@
 package brosync.server.strategies
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 import brosync.communications.Reply
 import brosync.communications.ReplyStatus
 import brosync.communications.params.Params
@@ -7,6 +10,7 @@ import brosync.communications.params.Params
 abstract class Strategy implements Runnable {
    Params params
    Socket socket
+   private static final Logger logger = LoggerFactory.getLogger(Strategy)
 
    def abstract Reply executeRequestMethodAction(Params params)
 
@@ -21,9 +25,11 @@ abstract class Strategy implements Runnable {
 
          reply = executeRequestMethodAction(params)
       } catch(Exception ex) {
+         logger.error('', ex)
+
          reply = new Reply(
-            status: ReplyStatus.DATABASE_ERROR,
-            message: 'Username ou Email em uso. Mude os valores e tente novamente.'
+            status: ReplyStatus.ERROR,
+            message: 'Aconteceu algum erro. Por favor, repita a operação.'
          )
       } finally {
          if(socket) {

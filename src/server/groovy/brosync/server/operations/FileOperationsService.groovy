@@ -1,24 +1,22 @@
 package brosync.server.operations
 
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.util.DigestUtils
 
-import brosync.communications.Reply
 import brosync.communications.dto.File as FileDTO
 import brosync.server.Application
 import brosync.server.db.FileDAO
 import brosync.server.db.SharingDAO
 import brosync.server.db.UserDAO
 import brosync.server.models.File as FileModel
+import brosync.server.models.Sharing
 
 @Service
 class FileOperationsService {
-
    @Autowired
    FileDAO fileDAO
 
@@ -58,22 +56,51 @@ class FileOperationsService {
       }
    }
 
-   def public boolean checkPathExistence(String username, String path, boolean isDirectory = false) {
-      def sharings
-
+   def public List getUsersWithFileAlreadyShared(String username, String path, boolean isDirectory = false) {
       if(isDirectory) {
-         sharings = sharingDAO.findSharingsForDirectoryByPathAndUsername(username, path)
+         userDAO.findUsernamesOfExistingSharingsForDirectoryByPathAndUsername(username, path)
       } else {
-         sharings = sharingDAO.findSharingsForFileByPathAndUsername(username, path)
+         userDAO.findUsernamesOfExistingSharingsForFileByPathAndUsername(username, path)
+      }
+   }
+
+   def public update(String username, FileDTO file) {
+      fileDAO.updateTimestamp(file.timestamp, file.path, username)
+      
+      def fileId = fileDAO.findByPathAndUsername(file.path, username).id
+      def storagePath = Paths.get(Application['server.storage:BroStorage'])
+      storagePath.resolve(fileId as String).bytes = file.data
+   }
+
+   def public create(String username, String[] usernames, FileDTO file) {
+      def fileModel = fileDTOToFileModel(file)
+      def fileId = fileDAO.create(fileModel)
+
+      (usernames + username).each {
+         def user = userDAO.findByUsername(it)
+         def sharing = new Sharing([
+            user_id: user.id,
+            file_id: fileId
+         ])
+
+         sharingDAO.create(sharing)
       }
 
-      return !sharings.empty
+      def storagePath = Paths.get(Application['server.storage:BroStorage'])
+      storagePath.resolve(fileId as String).bytes = file.data
+   }
+   
+   def getUserFiles(String username) {
+      fileDAO.findByUsername(username)
    }
 
-   def private FileModel fileDTOToFileModel(FileDTO fileDTO, String chosenPath) {
+   def FileModel fileDTOToFileModel(FileDTO file) {
+      def tempfile = Paths.get(file.path)
 
-   }
-
-   def private String calculateFileVersion(Path file) {
+      new FileModel([
+         original_dir: tempfile.parent == null ? null : "${tempfile.parent}${File.separator}",
+         original_path_within_original_dir: tempfile.fileName,
+         newest_timestamp: file.timestamp
+      ])
    }
 }

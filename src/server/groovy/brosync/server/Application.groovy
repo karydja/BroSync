@@ -1,9 +1,10 @@
 package brosync.server
 
+import java.nio.file.Files
+import java.nio.file.Paths
+
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.GenericGroovyApplicationContext
-
-import brosync.communications.Request
 
 class Application {
    static ApplicationContext context
@@ -11,6 +12,12 @@ class Application {
    public static void main(String... args) {
       def context = new GenericGroovyApplicationContext('classpath:config.groovy')
       this.context = context
+
+      def storagePath = Paths.get(Application['server.storage:BroStorage'])
+      if(Files.notExists(storagePath)) {
+         Files.createDirectory(storagePath)
+      }
+
       Server.start()
    }
 
