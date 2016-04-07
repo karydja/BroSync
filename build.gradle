@@ -48,4 +48,5 @@ dependencies {
    compile 'org.springframework:spring-context:4.2.5.RELEASE'
    compile 'org.springframework:spring-context-support:4.2.5.RELEASE'
    compile 'org.springframework:spring-jdbc:4.2.5.RELEASE'
+   compile 'com.googlecode.lanterna:lanterna:3.0.0-beta2'
 }
