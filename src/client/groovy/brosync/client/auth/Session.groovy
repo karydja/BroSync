@@ -12,9 +12,9 @@ class Session {
    static String token
    
    static void authorize(ScreenComponent screen = null) {
+      screen = screen ?: MainMenuPage.instance.menu
+      
       if (!Session.username || !Session.token) {
-         screen = screen ?: MainMenuPage.instance.menu
-         
          def loginForm = new UserForm({ user, pass ->
             // create request
             // check reply
@@ -33,6 +33,8 @@ class Session {
          })
          
          GUI.pushWindow(new SimpleDialog('Autentique-se primeiro!', { loginForm.draw() }).window)
+      } else {
+         screen.draw()
       }
    }
 }

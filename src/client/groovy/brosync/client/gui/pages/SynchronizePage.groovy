@@ -1,5 +1,6 @@
 package brosync.client.gui.pages
 
+import brosync.client.auth.Session;
 import brosync.client.gui.components.PendingActionDialog;
 import brosync.client.gui.components.UserForm;
 import groovy.lang.Delegate;
@@ -17,4 +18,8 @@ class SynchronizePage {
          MainMenuPage.instance.draw()
       }
    )
+   
+   def public void draw() {
+      Session.authorize(dialog)
+   }
 }

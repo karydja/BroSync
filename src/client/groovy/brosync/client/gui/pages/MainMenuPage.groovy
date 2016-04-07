@@ -25,9 +25,9 @@ class MainMenuPage {
          name: 'Sincronizar',
          action: { SynchronizePage.instance.draw() }
       ),
-//      new MenuOption(
-//         name: 'Download de arquivos ou diretórios específicos',
-//         action: { SecondaryMenuPage.instance.draw() }
-//      )
+      new MenuOption(
+         name: 'Download de arquivos ou diretórios específicos',
+         action: { draw() }
+      )
    )
 }

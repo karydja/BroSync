@@ -15,7 +15,7 @@ class UploadBox extends ScreenComponent {
    Panel mainPanel
    TextBox filePath
 
-   def public UploadBox() {
+   def public UploadBox(Closure uploadAction) {
       this.filePath = new TextBox(new TerminalSize(40, 1))
       
       this.mainPanel = new Panel().with {
@@ -27,7 +27,7 @@ class UploadBox extends ScreenComponent {
          it.addComponent(new Panel().with { buttonsPanel ->
             buttonsPanel.layoutManager = new GridLayout(2)
             buttonsPanel.addComponent(new Button('Voltar', { MainMenuPage.instance.draw() }))
-            buttonsPanel.addComponent(new Button('Upload', { MainMenuPage.instance.draw() }))
+            buttonsPanel.addComponent(new Button('Upload', { uploadAction(this.filePath.text) }))
          })
       }
       
