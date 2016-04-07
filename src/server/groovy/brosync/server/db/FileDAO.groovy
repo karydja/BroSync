@@ -33,8 +33,16 @@ class FileDAO {
       
       jdbcTemplate.queryForObject(sql, Long, username, path)
    }
+   
+   def updateTimestamp(File file) {
+      def sql = """
+         UPDATE files SET newest_timestamp = ?        
+      """
 
-   def updateTimestamp(Long timestamp, String path, String username) {
+      jdbcTemplate.update(sql, file.newest_timestamp)
+   }
+
+   def updateTimestampByPath(Long timestamp, String path, String username) {
       def sql = """
          UPDATE files SET newest_timestamp = ?
          FROM sharings, users
