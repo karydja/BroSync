@@ -1,13 +1,23 @@
 package brosync.client
 
+import groovy.io.FileType
+
+import java.nio.file.Files
+import java.nio.file.Paths
+
+import brosync.communications.dto.File
 import brosync.communications.Request
 import brosync.communications.RequestMethod
-import brosync.communications.params.CheckDirectoryParams
-import brosync.communications.params.CheckSingleFileParams
-import brosync.communications.params.SignUpParams
+import brosync.communications.params.SyncParams
+
 
 class Main {
    static void main(String... args) {
+      def broPath = Paths.get('/home/karydja/Desktop/BroSync/')
+      if(Files.notExists(broPath)) {
+         Files.createDirectory(broPath)
+      }
+            
       def socket = new Socket('localhost', 4567)
       def output = new ObjectOutputStream(socket.outputStream)
 
@@ -24,8 +34,49 @@ class Main {
       )*/
 
 
+      // REQUEST #2 PARA ARQUIVOS SOLTOS
+      /*def file = Paths.get("/home/karydja/Desktop/testando.txt")
+      def fileDTO = new File([
+         path: 'testando2.txt',
+         timestamp: Files.getLastModifiedTime(file).toMillis(),
+         data: file.bytes
+      ])
+      def params = new UploadSingleFileParams([
+         username: 'karydja',
+         usernames: ['mateus', 'ronaldo'],
+         existingPath: true, // existingPath vem do Reply #1
+         attachment: fileDTO
+      ])
+      def request = new Request(
+         method: RequestMethod.UPLOAD_SINGLE_FILE,
+         params: params
+      )*/
+      
+      
+      // DOWNLOAD DE ARQUIVOS SOLTOS
+      def files = [].with { files ->
+         broPath.eachFileRecurse(FileType.FILES) {
+            files << new File(
+               path: broPath.relativize(it),
+               timestamp: Files.getLastModifiedTime(it).toMillis(),
+               data: null
+            )
+         }
+         
+         return files
+      }      
+      def params = new SyncParams([
+         username: 'karydja',
+         files: files
+      ])
+      def request = new Request(
+         method: RequestMethod.SYNC,
+         params: params
+      )
+
+
       // REQUEST #1 PARA DIRETÓRIOS
-      def params = new CheckDirectoryParams([
+      /*def params = new CheckDirectoryParams([
          username: 'karydja',
          path: 'Fotos',
          isDirectory: true
@@ -33,7 +84,7 @@ class Main {
       def request = new Request(
          method: RequestMethod.CHECK_DIRECTORY,
          params: params
-      )
+      )*/
 
 
       // REQUEST PARA SIGN UP

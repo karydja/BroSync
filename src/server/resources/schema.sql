@@ -10,7 +10,7 @@ CREATE TABLE files (
    id                                  SERIAL PRIMARY KEY,
    original_dir                        VARCHAR,
    original_path_within_original_dir   VARCHAR NOT NULL,
-   newest_timestamp                    TIMESTAMP
+   newest_timestamp                    BIGINT
 );
 
 CREATE TABLE sharings (

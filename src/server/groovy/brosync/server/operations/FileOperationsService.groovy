@@ -1,7 +1,6 @@
 package brosync.server.operations
 
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,10 +13,10 @@ import brosync.server.db.FileDAO
 import brosync.server.db.SharingDAO
 import brosync.server.db.UserDAO
 import brosync.server.models.File as FileModel
+import brosync.server.models.Sharing
 
 @Service
 class FileOperationsService {
-
    @Autowired
    FileDAO fileDAO
 
@@ -65,10 +64,43 @@ class FileOperationsService {
       }
    }
 
-   def private FileModel fileDTOToFileModel(FileDTO fileDTO, String chosenPath) {
-
+   def public update(String username, FileDTO file) {
+      fileDAO.updateTimestamp(file.timestamp, file.path, username)
+      
+      def fileId = fileDAO.findByPathAndUsername(file.path, username).id
+      def storagePath = Paths.get(Application['server.storage:BroStorage'])
+      storagePath.resolve(fileId as String).bytes = file.data
    }
 
-   def private String calculateFileVersion(Path file) {
+   def public create(String username, String[] usernames, FileDTO file) {
+      def fileModel = fileDTOToFileModel(file)
+      def fileId = fileDAO.create(fileModel)
+
+      (usernames + username).each {
+         def user = userDAO.findByUsername(it)
+         def sharing = new Sharing([
+            user_id: user.id,
+            file_id: fileId
+         ])
+
+         sharingDAO.create(sharing)
+      }
+
+      def storagePath = Paths.get(Application['server.storage:BroStorage'])
+      storagePath.resolve(fileId as String).bytes = file.data
+   }
+   
+   def getUserFiles(String username) {
+      fileDAO.findByUsername(username)
+   }
+
+   def FileModel fileDTOToFileModel(FileDTO file) {
+      def tempfile = Paths.get(file.path)
+
+      new FileModel([
+         original_dir: tempfile.parent == null ? null : "${tempfile.parent}${File.separator}",
+         original_path_within_original_dir: tempfile.fileName,
+         newest_timestamp: file.timestamp
+      ])
    }
 }

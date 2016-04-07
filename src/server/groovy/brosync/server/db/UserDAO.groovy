@@ -23,11 +23,20 @@ class UserDAO {
       """
       jdbcTemplate.update(sql, newUser.username, newUser.email, newUser.password)
    }
-   
-   def findByUsernameList(String[] usernames) {
+
+   def findByUsername(String username) {
+      def sql = """
+         SELECT * FROM users WHERE username = ?
+      """
+      
+      jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper(User), username)
+   }
+
+   def findByUsernameList(String... usernames) {
       def sql = """
          SELECT * FROM users WHERE username IN ?
       """
+      
       jdbcTemplate.query(sql, new BeanPropertyRowMapper(User), usernames)
    }
 

@@ -30,7 +30,8 @@ class CheckDirectoryStrategy extends Strategy {
             message: """
                Essa pasta nunca foi compartilhada.
                Com quem deseja compartilhá-la?
-            """
+            """,
+            attachment: [existingPath: false]
          )
       } else {
          // Caso 2.1
@@ -39,7 +40,8 @@ class CheckDirectoryStrategy extends Strategy {
             message: """
                Essa pasta foi compartilhada com os seguintes usuários:
                ${usernames.join(', ')}
-            """
+            """,
+            attachment: [existingPath: true]
          )
       }
    }

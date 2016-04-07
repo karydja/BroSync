@@ -34,7 +34,8 @@ class CheckSingleFileStrategy extends Strategy {
             message: """
                Esse arquivo nunca foi compartilhado.
                Com quem deseja compartilhá-lo?
-            """
+            """,
+            attachment: [existingPath: false]
          )
       } else {
          // Caso 1.1
@@ -43,7 +44,8 @@ class CheckSingleFileStrategy extends Strategy {
             message: """
                Esse arquivo foi compartilhado com os seguintes usuários:
                ${usernames.join(', ')}
-            """
+            """,
+            attachment: [existingPath: true]
          )
       }
    }
