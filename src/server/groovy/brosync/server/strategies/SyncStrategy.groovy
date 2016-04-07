@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 import brosync.communications.Reply
+import brosync.communications.ReplyStatus
 import brosync.communications.params.Params
 import brosync.server.operations.FileOperationsService
 
@@ -21,7 +22,7 @@ class SyncStrategy extends Strategy {
          fileOperations.fileDTOToFileModel(it)         
       }
       
-      allFiles.findAll {
+      def downloadFiles = allFiles.findAll {
          def existingFile = syncFiles.find { synchronizedFile ->
             synchronizedFile.original_dir == it.original_dir && 
                synchronizedFile.original_path_within_original_dir == it.original_path_within_original_dir
@@ -29,7 +30,8 @@ class SyncStrategy extends Strategy {
          
          if (existingFile) {
             if (existingFile.newest_timestamp < it.newest_timestamp) {
-               return true
+               downloadFiles << it
+               return false
             }
          } else {
             return true
@@ -37,12 +39,19 @@ class SyncStrategy extends Strategy {
          
          return false
       }
-      
-      
-      /*
-       * recebe usuário
-       * pegar todos os files destinados àquele usuário
-       */
-      return null
+
+      if(downloadFiles.empty) {
+         return new Reply (
+            status: ReplyStatus.NOT_FOUND,
+            message: "Nao há arquivos a serem sincronizados."
+         )
+      } else {
+         fileOperations.getStorageFiles(username, downloadFiles)
+
+         return new Reply (
+            status: ReplyStatus.OK,
+            message: "A sincronização foi realizada com sucesso."
+         )
+      }
    }
 }

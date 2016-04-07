@@ -65,7 +65,7 @@ class FileOperationsService {
    }
 
    def public update(String username, FileDTO file) {
-      fileDAO.updateTimestamp(file.timestamp, file.path, username)
+      fileDAO.updateTimestampByPath(file.timestamp, file.path, username)
       
       def fileId = fileDAO.findByPathAndUsername(file.path, username).id
       def storagePath = Paths.get(Application['server.storage:BroStorage'])
@@ -88,6 +88,10 @@ class FileOperationsService {
 
       def storagePath = Paths.get(Application['server.storage:BroStorage'])
       storagePath.resolve(fileId as String).bytes = file.data
+   }
+   
+   def getStorageFiles(username, File[] files) {
+      def storagePath = Paths.get(Application['server.storage:BroStorage'])
    }
    
    def getUserFiles(String username) {
