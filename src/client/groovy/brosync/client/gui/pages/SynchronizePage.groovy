@@ -9,7 +9,10 @@ import groovy.lang.Singleton;
 @Singleton
 class SynchronizePage {
    
+<<<<<<< HEAD
    @Delegate
+=======
+>>>>>>> 76843f1... Temp commit
    PendingActionDialog dialog = new PendingActionDialog(
       'Sincronização em andamento. Aguarde.',
       { dialog ->

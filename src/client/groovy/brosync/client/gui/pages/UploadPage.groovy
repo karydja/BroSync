@@ -24,7 +24,10 @@ import groovy.lang.Singleton
 @Singleton
 class UploadPage {
 
+<<<<<<< HEAD
    @Delegate
+=======
+>>>>>>> 76843f1... Temp commit
    UploadBox box = new UploadBox({ file ->
       def broPath = Props.client.broPath
       def filePath = Paths.get(file)

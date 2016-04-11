@@ -97,5 +97,7 @@ class Main {
 
       println reply.status
       println reply.message
+
+      // MainMenuPage.instance.draw()
    }
 }
