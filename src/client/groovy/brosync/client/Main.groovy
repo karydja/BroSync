@@ -5,13 +5,13 @@ import brosync.client.gui.pages.MainMenuPage
 class Main {
    static void main(String... args) {
       // MainMenuPage.instance.draw()
-      def broPath = Paths.get('/home/karydja/Desktop/BroSync/')
-      if(Files.notExists(broPath)) {
-         Files.createDirectory(broPath)
-      }
+//      def broPath = Paths.get('/home/karydja/Desktop/BroSync/')
+//      if(Files.notExists(broPath)) {
+//         Files.createDirectory(broPath)
+//      }
             
-      def socket = new Socket('localhost', 4567)
-      def output = new ObjectOutputStream(socket.outputStream)
+//      def socket = new Socket('localhost', 4567)
+//      def output = new ObjectOutputStream(socket.outputStream)
 
 
       // REQUEST #1 PARA ARQUIVOS SOLTOS
@@ -46,25 +46,25 @@ class Main {
 
       
       // DOWNLOAD DE ARQUIVOS SOLTOS
-      def files = [].with { files ->
-         broPath.eachFileRecurse(FileType.FILES) {
-            files << new File(
-               path: broPath.relativize(it),
-               timestamp: Files.getLastModifiedTime(it).toMillis(),
-               data: null
-            )
-         }
-         
-         return files
-      }      
-      def params = new SyncParams([
-         username: 'karydja',
-         files: files
-      ])
-      def request = new Request(
-         method: RequestMethod.SYNC,
-         params: params
-      )
+//      def files = [].with { files ->
+//         broPath.eachFileRecurse(FileType.FILES) {
+//            files << new File(
+//               path: broPath.relativize(it),
+//               timestamp: Files.getLastModifiedTime(it).toMillis(),
+//               data: null
+//            )
+//         }
+//         
+//         return files
+//      }      
+//      def params = new SyncParams([
+//         username: 'karydja',
+//         files: files
+//      ])
+//      def request = new Request(
+//         method: RequestMethod.SYNC,
+//         params: params
+//      )
 
 
       // REQUEST #1 PARA DIRETÓRIOS
@@ -90,14 +90,14 @@ class Main {
          params: params
       )*/
 
-      output.writeObject(request)
+//      output.writeObject(request)
+//
+//      def input = new ObjectInputStream(socket.inputStream)
+//      def reply = input.readObject()
+//
+//      println reply.status
+//      println reply.message
 
-      def input = new ObjectInputStream(socket.inputStream)
-      def reply = input.readObject()
-
-      println reply.status
-      println reply.message
-
-      // MainMenuPage.instance.draw()
+       MainMenuPage.instance.draw()
    }
 }
